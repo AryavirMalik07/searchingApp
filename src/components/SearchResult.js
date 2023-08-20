@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/loading.css";
 
+// Two API KEYS:
 // 10f80fe4a9e94c19b3027fbaa03dc90c
 // 4af101e429a64033981d6ff9410cb6b2
+
+// *******Sir my api will run only on local host so pls run it on local host*******************
+
 const SearchResult = (props) => {
   const [myData, setMyData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,7 +15,7 @@ const SearchResult = (props) => {
     if (props.search) {
       axios({
         method: "GET",
-        url: `https://newsapi.org/v2/everything?q=${props.name}&from=2023-07-20&sortBy=published&apiKey=10f80fe4a9e94c19b3027fbaa03dc90c`,
+        url: `https://newsapi.org/v2/everything?q=${props.name}&from=2023-07-20&sortBy=published&apiKey=4af101e429a64033981d6ff9410cb6b2`,
       }).then((res) => {
         setMyData(res.data.articles);
         setLoading(false);
@@ -21,7 +25,7 @@ const SearchResult = (props) => {
   }, [props.search]);
 
   return (
-    <div className="md:p-[10px] p-[50px] mt-[100px]  flex flex-col items-center justify-center ">
+    <div className="md:p-[10px]  mt-[100px]  flex flex-col items-center justify-center overflow-x-hidden  ">
       {loading && (
         <div className="flex flex-col items-center justify-center gap-[20px]">
           <p className="text-white text-2xl font-semibold ">
@@ -34,7 +38,7 @@ const SearchResult = (props) => {
         </div>
       )}
 
-      <div className=" grid md:grid-cols-3  grid-cols-1 md:items-start items-center m-auto  gap-[20px] ">
+      <div className=" grid md:grid-cols-3  grid-cols-1  items-center justify-center  gap-[20px] ">
         {!loading && (
           <>
             {myData.map((item) => {
@@ -42,21 +46,23 @@ const SearchResult = (props) => {
 
               return (
                 <div
-                  className="flex flex-col text-black bg-white md:w-[400px] md:p-[20px] w-[350px] p-[10px] gap-[5px] rounded-3xl "
+                  className="flex flex-col text-black bg-white md:w-[400px] h-[600px] md:p-[10px] w-[350px] p-[20px] gap-[5px] rounded-3xl "
                   key={id}
                 >
                   {urlToImage ? (
                     <img
-                      className="w-80% rounded-3xl"
+                      className="w-80% md:h-[300px] h-[250px] rounded-3xl"
                       src={urlToImage}
                       alt={urlToImage}
                     />
                   ) : (
-                    <h1 className="font-2xl font-bold mb-[20px] w-80% text-center">
+                    <h1 className="md:text-2xl text-xl font-bold mb-[20px] w-80% md:h-[300px] h-[250px] text-center">
                       !!!!! Image not found !!!!!{" "}
                     </h1>
                   )}
-                  <h1 className="w-[100%] font-bold  text-xl ">{title}</h1>
+                  <h1 className="w-[100%] font-bold  md:text-xl text-lg ">
+                    {title}
+                  </h1>
                   <p className="font-sm">
                     {description} <br></br>
                     <a className=" text-sky-500 font-semibold  " href={url}>
